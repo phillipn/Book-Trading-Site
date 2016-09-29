@@ -9,6 +9,11 @@
         controller: 'homeCtrl',
         controllerAs: "vm"
       })
+      .when('/book/:bookid', {
+        templateUrl: "/book/book.view.html",
+        controller: 'bookCtrl',
+        controllerAs: "vm"
+      })
       .when('/login', {
         templateUrl: "/auth/login/login.view.html",
         controller: 'loginCtrl',
@@ -24,6 +29,12 @@
         controller: 'profileCtrl',
         controllerAs: "vm"
       })
+      .when('/user/:userid', {
+        templateUrl: "/auth/trades/trades.view.html",
+        controller: 'tradesCtrl',
+        controllerAs: "vm"
+      })
+      .otherwise({redirectTo: '/'});
   }
   
   angular.module('bookstoreApp')

@@ -2,8 +2,9 @@
   angular.module('bookstoreApp')
   .controller('homeCtrl', homeCtrl);
   
+  homeCtrl.$inject = ['$http','googleSearch','dbSearch'];
   function homeCtrl($http, googleSearch, dbSearch){
-    vm = this;
+    var vm = this;
     
     vm.genres = function(){
       dbSearch.forGenres()
@@ -69,6 +70,7 @@
       vm.userBooks = '';
       vm.googleBooks = '';
       vm.message = '';
+      genre = encodeURIComponent(genre);
       dbSearch.forBooks(genre)
         .success(function(data) {
            vm.userBooks = data;
@@ -78,20 +80,5 @@
         })
       return false;
     }
-    
-    vm.requestBook = function(book){
-      vm.error = '';
-      vm.userBooks = '';
-      vm.googleBooks = '';
-      vm.message = '';
-      dbSearch.requestBook(book)
-        .success(function(data) {
-          vm.message = "Trade request has been sent to...";
-        })
-        .error(function(err){
-          vm.error = err;
-        })
-      return false;
-    } 
   }
 })();

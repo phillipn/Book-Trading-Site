@@ -2,6 +2,7 @@
   angular.module('bookstoreApp')
     .service('dbSearch', dbSearch);
   
+  dbSearch.$inject = ['$http','authentication'];
   function dbSearch($http, authentication){
     var forGenres = function(){
       return $http.get('/api/genres');
@@ -15,8 +16,20 @@
       });
     };
     
-    var requestBook = function(user){
-      return $http.post('/api/books/users', user);
+    var findBookId = function(bookid){
+      return $http.get('/api/books/' + bookid, {
+        headers: {
+          Authorization: 'Bearer '+ authentication.getToken()
+        }
+      });
+    };
+    
+    var requestBook = function(bookid){
+      return $http.post('/api/books/' + bookid, {}, {
+        headers: {
+          Authorization: 'Bearer '+ authentication.getToken()
+        }
+      });
     };
     
     var forBooks = function(genre){
@@ -27,7 +40,8 @@
       forBooks: forBooks,
       forGenres: forGenres,
       addMyBook: addMyBook,
-      requestBook: requestBook
+      requestBook: requestBook,
+      findBookId: findBookId
     }
   }
 })();

@@ -3,7 +3,8 @@
   angular
     .module('bookstoreApp')
     .controller('loginCtrl', loginCtrl);
-
+  
+  loginCtrl.$inject = ['$location', 'authentication'];
   function loginCtrl($location, authentication) {
     var vm = this;
 

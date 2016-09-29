@@ -4,6 +4,7 @@
     .module('bookstoreApp')
     .controller('registerCtrl', registerCtrl);
 
+  registerCtrl.$inject = ['$location', 'authentication'];
   function registerCtrl($location, authentication) {
     var vm = this;
 

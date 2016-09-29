@@ -25,11 +25,11 @@
         <a ng-click='vm.addBook(book)'><img ng-src="{{ book.thumbnail }}"></a>
       </div>
       <div class='bookCover' ng-repeat="book in vm.userBooks">
-        <a ng-click='vm.requestBook(book)'><img ng-src="{{ book.thumbnail }}"></a>
+        <a href='/#book/{{ book._id }}' class='bookImg'><img ng-src="{{ book.thumbnail }}"></a>
       </div>
-  </div>
-  <div class='container'>
-    <div role="alert" ng-show="vm.message" class="alert alert-success">{{ vm.message }}</div>
-    <div role="alert" ng-show="vm.error" class="alert alert-danger">{{ vm.error }}</div>
+      <div class='container'>
+        <div role="alert" ng-show="vm.message" class="alert alert-success">{{ vm.message }}</div>
+        <div role="alert" ng-show="vm.error" class="alert alert-danger">{{ vm.error }}</div>
+      </div>
   </div>
 <footer-generic></footer-generic>

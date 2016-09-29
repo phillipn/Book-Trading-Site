@@ -13,7 +13,8 @@ var auth = jwt({
 router.get('/genres', ctrlBooks.searchForGenres);
 router.get('/books', ctrlBooks.searchForBooks);
 router.post('/books', auth, ctrlBooks.addMyBook);
-router.post('/books/users', ctrlBooks.requestBook);
+router.get('/books/:bookid', auth, ctrlBooks.findBook);
+router.post('/books/:bookid', auth, ctrlBooks.requestBook);
 
 router.get('/google/books', ctrlGoogle.searchForBooks);
 

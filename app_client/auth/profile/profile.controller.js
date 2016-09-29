@@ -4,6 +4,7 @@
     .module('bookstoreApp')
     .controller('profileCtrl', profileCtrl);
   
+  profileCtrl.$inject = ['authentication'];
   function profileCtrl(authentication){
     var vm = this;
     

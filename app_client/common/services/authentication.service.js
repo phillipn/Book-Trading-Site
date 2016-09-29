@@ -3,7 +3,8 @@
   angular
     .module('bookstoreApp')
     .service('authentication', authentication);
-
+    
+  authentication.$inject = ['$http','$window'];
   function authentication ($http, $window) {
 
     var saveToken = function (token) {
@@ -31,6 +32,7 @@
         var token = getToken();
         var payload = JSON.parse($window.atob(token.split('.')[1]));
         return {
+          _id : payload._id,
           email : payload.email,
           name : payload.name,
           city: payload.city,

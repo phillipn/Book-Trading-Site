@@ -1,0 +1,29 @@
+<navigation></navigation>
+  <div class='container'>
+    <page-header content="vm.pageHeader"></page-header>
+    <div class='col-xs-12'>
+      <div>
+        <h1>Trade Requests Received</h1>
+        <div ng-repeat='request in vm.tradesReceived'>
+          {{ request.name }}
+          {{ request.email }}
+          {{ request.city }}
+          {{ request.state }}
+        </div>
+      </div>
+      <div>
+        <h1>Trade Requests Sent</h1>
+        <div ng-repeat='request in vm.tradesSent'>
+          {{ request.name }}
+          {{ request.email }}
+          {{ request.city }}
+          {{ request.state }}
+        </div>
+      </div>
+    </div>
+    <div class='container'>
+      <div role="alert" ng-show="vm.message" class="alert alert-success">{{ vm.message }}</div>
+      <div role="alert" ng-show="vm.error" class="alert alert-danger">{{ vm.error }}</div>
+    </div>
+  </div>
+<footer-generic></footer-generic>
