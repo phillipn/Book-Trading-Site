@@ -44,8 +44,8 @@
       return $http.put('/api/books/' + bookid + '/requests/' + requestid, choice);
     }
     
-    var getBooksByRequester = function(userEmail){
-      return $http.get('/api/books/requests/' + userEmail);
+    var getBooksByRequester = function(requesterEmail){
+      return $http.get('/api/books/?requesterEmail=' + requesterEmail);
     }
     
     return {

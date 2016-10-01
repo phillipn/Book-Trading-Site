@@ -9,6 +9,8 @@ var sendJSONresponse = function(res, status, content) {
 module.exports.searchForBooks = function(req, res){
   var genre = req.query.genre;
   var userEmail = req.query.useremail;
+  var requesterEmail = req.query.requesterEmail;
+  
   if(genre){
     if(genre === 'All Genres'){
       Book.find({}).exec(function(err, records){
@@ -27,7 +29,7 @@ module.exports.searchForBooks = function(req, res){
         }
       })
     }
-  } else {
+  } else if(userEmail){
     Book.find({}).exec(function(err, books){
       var bookArr = [];
       if(err || !books){
@@ -41,6 +43,22 @@ module.exports.searchForBooks = function(req, res){
         sendJSONresponse(res, 200, bookArr);
       }
     })
+  } else {
+      var bookArr = [];
+      Book.find({}).select('title owner tradeRequests thumbnail').exec(function(err, books){
+        if(!books || err){
+          sendJSONresponse(res, 404, "Book not found");
+          return;
+        }
+        books.forEach(function(book){
+          book.tradeRequests.forEach(function(request){
+            if(request.email === requesterEmail){
+              bookArr.push({title: book.title, thumbnail: book.thumbnail, owner: book.owner, approval: request.approval});
+            }
+          })
+        })
+        sendJSONresponse(res, 200, bookArr);
+      })
   }
 }
 
@@ -184,25 +202,6 @@ module.exports.updateRequest = function(req, res){
         sendJSONresponse(res, 200, book);
       } 
     })
-  })
-}
-
-module.exports.getBooksByRequester = function(req, res){
-  var userEmail = req.params.userEmail;
-  var bookArr = [];
-  Book.find({}).select('title owner tradeRequests thumbnail').exec(function(err, books){
-    if(!books || err){
-      sendJSONresponse(res, 404, "Book not found");
-      return;
-    }
-    books.forEach(function(book){
-      book.tradeRequests.forEach(function(request){
-        if(request.email === userEmail){
-          bookArr.push({title: book.title, thumbnail: book.thumbnail, owner: book.owner, approval: request.approval});
-        }
-      })
-    })
-    sendJSONresponse(res, 200, bookArr);
   })
 }
 

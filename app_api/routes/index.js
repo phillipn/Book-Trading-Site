@@ -15,7 +15,6 @@ router.get('/books', ctrlBooks.searchForBooks);
 router.post('/books', auth, ctrlBooks.addMyBook);
 router.get('/books/:bookid', auth, ctrlBooks.findBook);
 router.post('/books/:bookid', auth, ctrlBooks.requestBook);
-router.get('/books/requests/:userEmail', ctrlBooks.getBooksByRequester);
 router.put('/books/:bookid/requests/:requestid', ctrlBooks.updateRequest);
 
 router.get('/google/books', ctrlGoogle.searchForBooks);
