@@ -24,6 +24,10 @@
       });
     };
     
+    var findUserBooks = function(useremail){
+      return $http.get('/api/books/?useremail=' + useremail);
+    };
+    
     var requestBook = function(bookid){
       return $http.post('/api/books/' + bookid, {}, {
         headers: {
@@ -36,12 +40,23 @@
       return $http.get('/api/books?genre=' + genre);
     };
     
+    var updateRequest = function(bookid, requestid, choice){
+      return $http.put('/api/books/' + bookid + '/requests/' + requestid, choice);
+    }
+    
+    var getBooksByRequester = function(userEmail){
+      return $http.get('/api/books/requests/' + userEmail);
+    }
+    
     return {
       forBooks: forBooks,
       forGenres: forGenres,
       addMyBook: addMyBook,
       requestBook: requestBook,
-      findBookId: findBookId
+      findBookId: findBookId,
+      findUserBooks: findUserBooks,
+      updateRequest: updateRequest,
+      getBooksByRequester: getBooksByRequester
     }
   }
 })();

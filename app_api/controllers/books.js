@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Book = mongoose.model('Book');
+var User = mongoose.model('User');
 
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
@@ -8,21 +9,37 @@ var sendJSONresponse = function(res, status, content) {
 
 module.exports.searchForBooks = function(req, res){
   var genre = req.query.genre;
-  if(genre === 'All Genres'){
-    Book.find({}).exec(function(err, records){
-      if(err){
-        sendJSONresponse(res, 400, err);
-      } else {
-        sendJSONresponse(res, 200, records);
-      }
-    })
+  var userEmail = req.query.useremail;
+  if(genre){
+    if(genre === 'All Genres'){
+      Book.find({}).exec(function(err, records){
+        if(err){
+          sendJSONresponse(res, 400, err);
+        } else {
+          sendJSONresponse(res, 200, records);
+        }
+      })
+    } else {
+      Book.find({categories: genre}).exec(function(err, records){
+        if(err){
+          sendJSONresponse(res, 400, err);
+        } else {
+          sendJSONresponse(res, 200, records);
+        }
+      })
+    }
   } else {
-    Book.find({categories: genre}).exec(function(err, records){
-      console.log(records);
-      if(err){
+    Book.find({}).exec(function(err, books){
+      var bookArr = [];
+      if(err || !books){
         sendJSONresponse(res, 400, err);
       } else {
-        sendJSONresponse(res, 200, records);
+        books.forEach(function(book){
+          if(book.owner.email === userEmail){
+            bookArr.push(book);
+          }
+        })
+        sendJSONresponse(res, 200, bookArr);
       }
     })
   }
@@ -59,13 +76,11 @@ module.exports.findBook = function(req, res){
 
 module.exports.addMyBook = function(req, res){
   var book = req.body;
-  console.log(book);
   
   if(!book.averageRating){
     book.averageRating = 0;
     book.ratingsCount = 0;
   }
-  
   Book.create({
     title: book.title,
     author: book.authors,
@@ -93,11 +108,11 @@ module.exports.addMyBook = function(req, res){
 
 module.exports.requestBook = function(req, res){
   var bookid = req.params.bookid;
-  console.log(req.payload);
   Book.findById(bookid)
     .select('tradeRequests owner')
     .exec(
       function(err, book) {
+        var save = true;
         if (!book) {
           sendJSONresponse(res, 404, {
             "message": "bookid not found"
@@ -116,25 +131,80 @@ module.exports.requestBook = function(req, res){
         book.tradeRequests.some(function(request, i){
           if(request.email == req.payload.email){
             // DIRTY DIRTY HACK - Preferably I would set a totally, separate virtual attribute to say "Hey, this user has already inquired about this book. I need to figure out how to do that." 
-            sendJSONresponse(res, 400, "You already requested this book");
+            save = false;
             return;
           }
         })
-        
-        book.tradeRequests.push({
-          name: req.payload.name, 
-          email: req.payload.email, 
-          city: req.payload.city, 
-          state: req.payload.state
-        });
-        book.save(function(err, book) {
-          if (err) {
-            sendJSONresponse(res, 404, err);
-          } else {
-            sendJSONresponse(res, 200, book);
-          }
-        });
+        if(save === true){
+          book.tradeRequests.push({
+            name: req.payload.name, 
+            email: req.payload.email, 
+            city: req.payload.city, 
+            state: req.payload.state,
+            approval: "pending"
+          });
+          book.save(function(err, book) {
+            if (err) {
+              sendJSONresponse(res, 404, err);
+            } else {
+              sendJSONresponse(res, 200, book);
+            }
+          });
+        } else {
+          sendJSONresponse(res, 400, "You have already requested this book");
+        }
     })
+}
+
+module.exports.updateRequest = function(req, res){
+  var bookid = req.params.bookid;
+  var requestid = req.params.requestid;
+  var choice = req.body.choice;
+  var thisRequest;
+  Book.findById(bookid).exec(function(err, book){
+    if(!book || err){
+      sendJSONresponse(res, 404, "Book not found");
+      return;
+    }
+    thisRequest = book.tradeRequests.id(requestid);
+
+    if(!thisRequest || err){
+      sendJSONresponse(res, 404, "Request not found");
+      return;
+    }
+    if(choice === "approved"){
+      book.tradeRequests.forEach(function(request){
+        request.approval = "rejected";
+      });
+    }
+    thisRequest.approval = choice;
+    book.save(function(err, book){
+      if (err) {
+        sendJSONresponse(res, 404, err);
+      } else {
+        sendJSONresponse(res, 200, book);
+      } 
+    })
+  })
+}
+
+module.exports.getBooksByRequester = function(req, res){
+  var userEmail = req.params.userEmail;
+  var bookArr = [];
+  Book.find({}).select('title owner tradeRequests thumbnail').exec(function(err, books){
+    if(!books || err){
+      sendJSONresponse(res, 404, "Book not found");
+      return;
+    }
+    books.forEach(function(book){
+      book.tradeRequests.forEach(function(request){
+        if(request.email === userEmail){
+          bookArr.push({title: book.title, thumbnail: book.thumbnail, owner: book.owner, approval: request.approval});
+        }
+      })
+    })
+    sendJSONresponse(res, 200, bookArr);
+  })
 }
 
 module.exports.searchForGenres = function(req, res){

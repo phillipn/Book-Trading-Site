@@ -1,23 +1,35 @@
 <navigation></navigation>
   <div class='container'>
     <page-header content="vm.pageHeader"></page-header>
+    <div class='text-center'>
+      <button class='btn btn-default' ng-class='{"active": vm.requestInbox}' ng-click='vm.toggleRequestDivs("inbox")'>Inbox</button>
+      <button class='btn btn-default' ng-class='{"active": vm.requestOutbox}' ng-click='vm.toggleRequestDivs("outbox")'>Outbox</button>
+    </div>
     <div class='col-xs-12'>
-      <div>
-        <h1>Trade Requests Received</h1>
-        <div ng-repeat='request in vm.tradesReceived'>
-          {{ request.name }}
-          {{ request.email }}
-          {{ request.city }}
-          {{ request.state }}
+      <div ng-if='vm.requestInbox'>
+        <div class='bookListInbox'>
+          <div class='bookBoxInbox' ng-repeat='book in vm.userBooks | orderBy : "-tradeRequests.length"'>
+            <img ng-src="{{ book.thumbnail }}">
+            <h3>{{ book.tradeRequests.length }} Trade Requests</h3>
+            <div ng-repeat='request in book.tradeRequests'> 
+              {{ request | formatRequest }}
+              <button ng-if='request.approval == "pending"' ng-click='vm.updateRequest(book._id, request._id, {choice: "approved"})' class='glyphButton'><i class='glyphicon glyphicon-ok'></i></button>
+              <button ng-if='request.approval == "pending"' ng-click='vm.updateRequest(book._id, request._id, {choice: "rejected"})' class='glyphButton'><i class='glyphicon glyphicon-remove'></i></button>
+            </div>
+          </div>
         </div>
       </div>
-      <div>
-        <h1>Trade Requests Sent</h1>
-        <div ng-repeat='request in vm.tradesSent'>
-          {{ request.name }}
-          {{ request.email }}
-          {{ request.city }}
-          {{ request.state }}
+      <div ng-if='vm.requestOutbox'>
+        <div class='bookListOutbox row'>
+          <div class='bookBoxOutbox col-xs-12 col-md-6' ng-repeat='book in vm.requestedBooks'>
+            <img class='thumbnail'ng-src="{{ book.thumbnail }}">
+            <div class='requestInfoDiv'>
+              <p><h5 class='heading'>Owner Name:</h5> {{ book.owner.name }}</p>
+              <p><h5 class='heading'>Owner City:</h5> {{ book.owner.city }}</p>
+              <p><h5 class='heading'>Owner State:</h5> {{ book.owner.state }}</p>
+              <p><h5 class='heading'>Approval Status:</h5> {{ book.approval }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -2,34 +2,37 @@
   <div class='container'>
     <page-header content="vm.pageHeader"></page-header>
       <div class='col-xs-12'>
-        <div ng-class="{fade: vm.titleDivHide}" ng-click="vm.emphasize('titleDiv')" class='default well col-md-6'>
-          <form class='form-group' ng-submit='vm.searchBooks(vm.titleSearch)'>
-            <h4>Add Book To Your Collection</h4>
-            <input ng-model="vm.titleSearch" class='form-control' type='text' name='title' placeholder='Enter keyword'></input>
-            <input class='form-control' type='submit' value='Browse'></input>
-          </form>
-        </div>
-        <div ng-class="{fade: vm.genreDivHide}" ng-click="vm.emphasize('genreDiv')" class='default well col-md-6'>
-          <form class='form-group' ng-submit='vm.getUserBooks(vm.genreSearch)'>
-            <h4>Search Our User Books by Genre</h4>
-            <select ng-model="vm.genreSearch" class="form-control" id="sel1" placeholder='Enter genre'>
-              <option value="" disabled selected>Select a genre</option>
-              <option>All Genres</option>
-              <option ng-repeat="genre in vm.genres">{{ genre }}</option>
-            </select>
-            <input class='form-control' type='submit' value='Browse'></input>
-          </form>
-        </div>
-      </div>
-      <div class='bookCover' ng-repeat="book in vm.googleBooks">
-        <a ng-click='vm.addBook(book)'><img ng-src="{{ book.thumbnail }}"></a>
-      </div>
-      <div class='bookCover' ng-repeat="book in vm.userBooks">
-        <a href='/#book/{{ book._id }}' class='bookImg'><img ng-src="{{ book.thumbnail }}"></a>
-      </div>
-      <div class='container'>
         <div role="alert" ng-show="vm.message" class="alert alert-success">{{ vm.message }}</div>
         <div role="alert" ng-show="vm.error" class="alert alert-danger">{{ vm.error }}</div>
+        <div class='searchBoxes'>
+          <div ng-class="{fade: vm.titleDivHide}" ng-click="vm.emphasize('titleDiv')" class='well col-md-6'>
+            <form class='form-group' ng-submit='vm.searchBooks(vm.titleSearch)'>
+              <h4>Add Book To Your Collection</h4>
+              <input ng-model="vm.titleSearch" class='form-control' type='text' name='title' placeholder='Enter keyword'></input>
+              <input class='form-control submit' type='submit' value='Browse'></input>
+            </form>
+          </div>
+          <div ng-class="{fade: vm.genreDivHide}" ng-click="vm.emphasize('genreDiv')" class='well col-md-6'>
+            <form class='form-group' ng-submit='vm.getUserBooks(vm.genreSearch)'>
+              <h4>Search Our User Books by Genre</h4>
+              <select ng-model="vm.genreSearch" class="form-control" id="sel1" placeholder='Enter genre'>
+                <option value="" disabled selected>Select a genre</option>
+                <option>All Genres</option>
+                <option ng-repeat="genre in vm.genres">{{ genre }}</option>
+              </select>
+              <input class='form-control submit' type='submit' value='Browse'></input>
+            </form>
+          </div>
+        </div>
+      <div ng-hide='!vm.googleBooks' class='bookContainer'>
+        <div class='bookCover' ng-repeat="book in vm.googleBooks">
+          <a ng-click='vm.addBook(book)'><img ng-src="{{ book.thumbnail }}"></a>
+        </div>
+      </div>
+      <div ng-hide='!vm.userBooks' class='bookContainer'>
+        <div class='bookCover' ng-repeat="book in vm.userBooks">
+          <a href='/#book/{{ book._id }}' class='bookImg'><img ng-src="{{ book.thumbnail }}"></a>
+        </div>
       </div>
   </div>
 <footer-generic></footer-generic>

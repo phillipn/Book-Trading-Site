@@ -50,6 +50,7 @@
           vm.message = "Trade request has been sent to " + data.owner.name;
         })
         .error(function(err){
+          console.log(err);
           vm.error = err;
         })
       return false;

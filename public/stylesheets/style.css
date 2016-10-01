@@ -1,12 +1,64 @@
+/* General */
 body{
   background: #18BC9C;
+  color: white;
 }
-#banner{
+.well{
+  color: white;
+}
+footer {
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  color: white;
   margin-top: 100px;
-  text-align: center;
+  padding: 25px;
+  width: 100%;
 }
-.jumbotron{
-  text-align: center;
+
+/* Navbar */
+.navbar, footer, .well{
+  background: #2C3E50;
+}
+.navbar-default .navbar-brand{
+  color: white;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: white;
+}
+.navbar-default .navbar-nav>li>a{
+  color: #FFFFFF;
+}
+a:hover {
+  color: #18BC9C !important;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: #18BC9C;
+}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
+  background: #2C3E50;
+  color: white;
+}
+.navbar-default .navbar-nav .open .dropdown-menu>li>a{
+  color: white;
+  background: #2C3E50;
+}
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover{
+  color: white;
+}
+.dropdown-menu{
+  background-color: #2C3E50;
+}
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover{
+  color: white;
+}
+
+/* Home Page */
+.bookContainer{
+  margin-bottom: 120px;
+}
+.searchBoxes {
+  margin-bottom: 120px;
 }
 .default{
   opacity: 1;
@@ -15,6 +67,9 @@ body{
   display: inline-block;
   padding: 5px;
 }
+.bookBox{
+  border: 1px solid black;
+}
 
 .bookImg{
   cursor: pointer;
@@ -22,9 +77,105 @@ body{
 .previewLink {
   display: block;
 }
-
 .fade{
   -webkit-transition: opacity 2s; /* For Safari 3.1 to 6.0 */
   transition: opacity .55s;
   opacity: .3;
+}
+.submit {
+  margin-top: 3px;
+}
+/* Page Header */
+#banner{
+  margin-top: 80px;
+  text-align: center;
+}
+
+/* Trade Request Page */
+.glyphicon-ok{
+  color: green;
+}
+.glyphicon-remove{
+  color: red;
+}
+.glyphButton{
+  background: white;
+}
+.btn-default.active, .btn-default.focus{
+  background-color: #e6e6e6;
+}
+.heading {
+  display: inline-block;
+}
+.requestInfoDiv{
+  display: inline-block;
+  margin-left: 15px;
+}
+.thumbnail {
+  display: inline-block;
+}
+.bookBoxOutbox {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2C3E50;
+  border-radius: 10px;
+  border: 2px solid #18BC9C;
+}
+.bookBoxInbox {
+  text-align: center;
+  padding: 50px 0px;
+  background: #2C3E50;
+  border-radius: 10px;
+  border: 2px solid #18BC9C;
+}
+.bookListOutbox {
+  margin-top: 20px;
+  margin-bottom: 90px;
+}
+.bookListInbox {
+  margin-top: 20px;
+  margin-bottom: 90px;
+}
+
+/* Individual Book Page */
+.bookDescDiv{
+  margin-bottom: 100px;
+}
+
+/* Profile Page */
+.formChangeDiv{
+  margin-top: 55px;
+  margin-bottom: 155px;
+}
+
+/* Login Page */
+.signin{
+  padding: 40px 0px;
+  margin-bottom: 100px;
+}
+.register{
+  padding: 40px 0px;
+  margin-bottom: 100px;
+}
+@media screen and (max-width: 991px){
+  .searchBoxes{
+    margin-bottom: 0px;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .requestInfoDiv{
+    display: block;
+  }
+  .thumbnail{
+    margin-top: 15px;
+  }
+  .bookBoxOutbox{
+    padding: 40px 0px;
+    height: 500px;
+    display: block;
+    text-align: center;
+  }
 }

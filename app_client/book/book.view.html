@@ -1,7 +1,9 @@
 <navigation></navigation>
   <div class='container'>
     <page-header content="vm.pageHeader"></page-header>
-      <div class='well'>
+    <div role="alert" ng-show="vm.message" class="alert alert-success">{{ vm.message }}</div>
+    <div role="alert" ng-show="vm.error" class="alert alert-danger">{{ vm.error }}</div>
+      <div class='well bookDescDiv'>
         <div class='text-center'>
           <img ng-src="{{ vm.book.thumbnail }}">
           <a class='previewLink' href="{{ vm.book.preview }}" target='_blank'>{{ vm.clickLink }}</a>
@@ -11,12 +13,8 @@
         <p>{{ vm.book.rating | formatReview }}</p>
         <p>{{ vm.book.description | formatDescription }}</p>
         <p>{{ vm.book.owner | formatOwner }}</p>
-        <button ng-class='vm.buttonClass' ng-hide='vm.ownBook' ng-click='vm.requestBook(vm.book._id)'>
+        <button ng-class='vm.buttonClass' ng-hide='vm.ownBook' ng-click='(vm.buttonClass === "btn btn-success") ? vm.requestBook(vm.book._id) : ""'>
           {{ vm.buttonText }}
         </button>
-        <div class='container'>
-          <div role="alert" ng-show="vm.message" class="alert alert-success">{{ vm.message }}</div>
-          <div role="alert" ng-show="vm.error" class="alert alert-danger">{{ vm.error }}</div>
-        </div>
       </div>
 <footer-generic></footer-generic>

@@ -11,7 +11,8 @@ var tradeSchema = new mongoose.Schema({
   email: String,
   name: String,
   city: String,
-  state: String
+  state: String,
+  approval: String
 });
 
 var booksSchema = new mongoose.Schema({

@@ -2,20 +2,22 @@
   angular.module('bookstoreApp')
   .controller('homeCtrl', homeCtrl);
   
-  homeCtrl.$inject = ['$http','googleSearch','dbSearch'];
-  function homeCtrl($http, googleSearch, dbSearch){
+  homeCtrl.$inject = ['$http', 'authentication', 'googleSearch','dbSearch'];
+  function homeCtrl($http, authentication, googleSearch, dbSearch){
     var vm = this;
     
     vm.genres = function(){
       dbSearch.forGenres()
         .success(function(data) {
-           vm.genres = data;
+          vm.genres = data;
         })
         .error(function(err){
           vm.error = err;
         })
       return false;
     }
+    
+    vm.currentUser = authentication.currentUser();
     
     vm.genres();
     
@@ -70,6 +72,12 @@
       vm.userBooks = '';
       vm.googleBooks = '';
       vm.message = '';
+      
+      if(!vm.currentUser){
+        vm.error = 'Please log in'
+        return false;
+      }
+      
       genre = encodeURIComponent(genre);
       dbSearch.forBooks(genre)
         .success(function(data) {

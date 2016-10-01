@@ -2,8 +2,8 @@
 
 <div class="container">
   <page-header content="vm.pageHeader"></page-header>
-  <div class="row">
-    <div class="col-md-6 col-sm-8">
+  <div class="well row signin">
+    <div class="col-sm-offset-2 col-sm-8">
       <p class="lead">Not a member? Please <a href="/#register?page={{ vm.returnPage }}">register</a> first.</p>
       <form ng-submit="vm.onSubmit()">
         <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError.message || vm.formError }}</div>

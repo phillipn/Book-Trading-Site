@@ -2,10 +2,11 @@
 
 <div class="container">
   <page-header content="vm.pageHeader"></page-header>
-
-  <div class="row">
-    <div class="col-md-6 col-sm-12">
-      <div class='well'>
+  <div role="alert" ng-show="vm.message" class="alert alert-success">{{ vm.message }}</div>
+  <div role="alert" ng-show="vm.error" class="alert alert-danger">{{ vm.error }}</div>
+  <div class="formChangeDiv row">
+    <div class="col-md-6 col-sm-6">
+      <div class='changeAddressDiv well'>
         <form ng-submit="vm.changeAddress()">
           <h2> Update Location </h2>
           <div class="form-group">
@@ -19,14 +20,16 @@
           <button type="submit" class="btn btn-default">Save</button>
         </form>
       </div>
-      <div role="alert" ng-show="vm.message" class="alert alert-success">{{ vm.message }}</div>
-      <div role="alert" ng-show="vm.error" class="alert alert-danger">{{ vm.error }}</div>
-      <div class='well'>
+    </div>
+    <div class="col-md-6 col-sm-6">
+      <div class='changePasswordDiv well'>
         <form ng-submit="vm.changePassword()">
           <h2> Update Password </h2>
           <div class="form-group">
             <label for="currentPassword">Current Password</label>
             <input type="password" class="form-control" id="currentPassword" placeholder="Current Password" ng-model="vm.credentials.password">
+          </div>
+          <div class="form-group">
             <label for="password">New Password</label>
             <input type="password" class="form-control" id="newPassword" placeholder="New Password" ng-model="vm.credentials.newPassword">
           </div>
