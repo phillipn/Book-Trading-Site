@@ -33,6 +33,8 @@ var appClientFiles = [
   'app_client//common/filters/formatOwner.filter.js',
   'app_client/common/directives/navigation/navigation.controller.js',
   'app_client/common/directives/navigation/navigation.directive.js',
+  'app_client/common/directives/bookRequestDiv/bookRequest.directive.js',
+  'app_client/common/directives/bookRequestDiv/bookRequest.controller.js',
   'app_client/common/directives/footer/footerGeneric.directive.js',
   'app_client/common/directives/pageHeader/pageHeader.directive.js'
 ];
