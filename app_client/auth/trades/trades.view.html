@@ -8,22 +8,12 @@
     <div class='col-xs-12'>
       <div ng-if='vm.requestInbox'>
         <div class='row bookListInbox'>
-          <div class='col-md-6 bookBoxInbox' ng-repeat='(bIndex, book) in vm.userBooks | orderBy : "-tradeRequests.length"'>
-            <img ng-src="{{ book.thumbnail }}">
-            <h3>{{ book.tradeRequests.length | formatTradeRequestHeader}}</h3>
-            <div ng-repeat='(rIndex,request) in book.tradeRequests'> 
-              <span ng-class='vm.colorApproval(request.approval)'>{{ request | formatRequest }}</span>
-              <button ng-if='vm.checkApproval(request)' ng-click='vm.updateRequest(book._id, request._id, {choice: "approved"}, bIndex)' class='glyphButton'><i class='glyphicon glyphicon-ok'></i></button>
-              <button ng-if='vm.checkApproval(request)' ng-click='vm.updateRequest(book._id, request._id, {choice: "rejected"}, bIndex)' class='glyphButton'><i class='glyphicon glyphicon-remove'></i></button>
-            </div>
-          </div>
+          <user-book-div></user-book-div>
         </div>
       </div>
       <div ng-if='vm.requestOutbox'>
         <div class='bookListOutbox row'>
-          <div class='bookBoxOutbox col-xs-12 col-md-6' ng-repeat='book in vm.requestedBooks | orderBy : vm.orderByApproval'>
-            <book-request-div book="book"></book-request-div>
-          </div>
+          <book-request-div book></book-request-div>
         </div>
       </div>
     </div>

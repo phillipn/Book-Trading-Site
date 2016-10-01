@@ -146,9 +146,7 @@ a:hover {
 .colorGreen {
   color: green;
 }
-book-request-div{
-  display: flex;
-}
+
 /* Individual Book Page */
 .bookDescDiv{
   margin-bottom: 100px;

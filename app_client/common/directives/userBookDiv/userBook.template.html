@@ -1,0 +1,9 @@
+<div class='col-md-6 bookBoxInbox' ng-repeat='(thisIndex, userBook) in ubvm.userBooks | orderBy : "-tradeRequests.length"'>
+  <img ng-src="{{ userBook.thumbnail }}">
+  <h3>{{ userBook.tradeRequests.length | formatTradeRequestHeader}}</h3>
+  <div ng-repeat='(rIndex,request) in userBook.tradeRequests'> 
+    <span ng-class='ubvm.colorApproval(request.approval)'>{{ request | formatRequest }}</span>
+    <button ng-if='ubvm.checkApproval(request)' ng-click='ubvm.updateRequest(userBook._id, request._id, {choice: "approved"}, thisIndex)' class='glyphButton'><i class='glyphicon glyphicon-ok'></i></button>
+    <button ng-if='ubvm.checkApproval(request)' ng-click='ubvm.updateRequest(userBook._id, request._id, {choice: "rejected"}, thisIndex)' class='glyphButton'><i class='glyphicon glyphicon-remove'></i></button>
+  </div>
+</div>

@@ -1,10 +1,12 @@
-<img class='thumbnail'ng-src="{{ thisBook.thumbnail }}">
-<div class='requestInfoDiv'>
-  <p><h5 class='heading'>Owner Name:</h5> {{ thisBook.owner.name }}</p>
-  <p><h5 class='heading'>Owner City:</h5> {{ thisBook.owner.city }}</p>
-  <p><h5 class='heading'>Owner State:</h5> {{ thisBook.owner.state }}</p>
-  <p>
-    <h5 class='heading'>Approval Status: </h5>
-      <span ng-class='brvm.colorApproval(thisBook.approval)'>{{ thisBook.approval }}</span>
-  </p>
+<div class='bookBoxOutbox col-xs-12 col-md-6' ng-repeat='book in brvm.requestedBooks | orderBy : vm.orderByApproval'>
+  <img class='thumbnail'ng-src="{{ book.thumbnail }}">
+  <div class='requestInfoDiv'>
+    <p><h5 class='heading'>Owner Name:</h5> {{ book.owner.name }}</p>
+    <p><h5 class='heading'>Owner City:</h5> {{ book.owner.city }}</p>
+    <p><h5 class='heading'>Owner State:</h5> {{ book.owner.state }}</p>
+    <p>
+      <h5 class='heading'>Approval Status: </h5>
+        <span ng-class='brvm.colorApproval(book.approval)'>{{ book.approval }}</span>
+    </p>
+  </div>
 </div>
