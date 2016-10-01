@@ -9,7 +9,7 @@ var sendJSONresponse = function(res, status, content) {
 
 var options = {
   key: process.env.API_KEY,
-  limit: 10
+  limit: 12
 };
 
 module.exports.searchForBooks = function(req, res){  

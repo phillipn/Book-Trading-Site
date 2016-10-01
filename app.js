@@ -26,6 +26,7 @@ var appClientFiles = [
   'app_client//common/services/dbSearch.service.js',
   'app_client//common/filters/formatReview.filter.js',
   'app_client//common/filters/formatRequest.filter.js',
+  'app_client//common/filters/formatTradeRequestHeader.filter.js',
   'app_client//common/filters/formatTitle.filter.js',
   'app_client//common/filters/formatAuthor.filter.js',
   'app_client//common/filters/formatDescription.filter.js',
