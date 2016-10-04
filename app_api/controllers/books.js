@@ -10,7 +10,7 @@ module.exports.searchForBooks = function(req, res){
   var genre = req.query.genre;
   var userEmail = req.query.useremail;
   var requesterEmail = req.query.requesterEmail;
-  
+
   if(genre){
     if(genre === 'All Genres'){
       Book.find({}).exec(function(err, records){
@@ -67,9 +67,7 @@ module.exports.findBook = function(req, res){
     Book.findById(req.params.bookid)
     .exec(function(err, book) {
       if (!book) {
-        sendJSONresponse(res, 404, {
-          "message": "bookid not found"
-        });
+        sendJSONresponse(res, 404, err);
         return;
       } else if (err) {
         console.log(err);
@@ -79,7 +77,7 @@ module.exports.findBook = function(req, res){
 
       book.tradeRequests.some(function(request, i){
         if(request.email == req.payload.email){
-          // DIRTY DIRTY HACK - Preferably I would set a totally, separate virtual attribute to say "Hey, this user has already inquired about this book. I need to figure out how to do that." 
+          // DIRTY DIRTY HACK - Preferably I would set a totally, separate virtual attribute to say "Hey, this user has already inquired about this book. I need to figure out how to do that."
           book.tradeRequests = false;
           return true;
         }
@@ -93,7 +91,7 @@ module.exports.findBook = function(req, res){
 
 module.exports.addMyBook = function(req, res){
   var book = req.body;
-  
+
   if(!book.averageRating){
     book.averageRating = 0;
     book.ratingsCount = 0;
@@ -108,12 +106,12 @@ module.exports.addMyBook = function(req, res){
     thumbnail: book.thumbnail,
     preview: book.link,
     owner: {
-      name: req.payload.name, 
-      email: req.payload.email, 
-      city: req.payload.city, 
+      name: req.payload.name,
+      email: req.payload.email,
+      city: req.payload.city,
       state: req.payload.state
     },
-    tradeRequests: []      
+    tradeRequests: []
    }, function(err, result){
      if(err){
        sendJSONresponse(res, 400, err);
@@ -139,24 +137,24 @@ module.exports.requestBook = function(req, res){
           sendJSONresponse(res, 400, err);
           return;
         }
-        
+
         if(book.owner.email == req.payload.email){
           sendJSONresponse(res, 400, "You cannot request your own book");
           return;
         }
-        
+
         book.tradeRequests.some(function(request, i){
           if(request.email == req.payload.email){
-            // DIRTY DIRTY HACK - Preferably I would set a totally, separate virtual attribute to say "Hey, this user has already inquired about this book. I need to figure out how to do that." 
+            // DIRTY DIRTY HACK - Preferably I would set a totally, separate virtual attribute to say "Hey, this user has already inquired about this book. I need to figure out how to do that."
             save = false;
             return;
           }
         })
         if(save === true){
           book.tradeRequests.push({
-            name: req.payload.name, 
-            email: req.payload.email, 
-            city: req.payload.city, 
+            name: req.payload.name,
+            email: req.payload.email,
+            city: req.payload.city,
             state: req.payload.state,
             approval: "pending"
           });
@@ -200,7 +198,7 @@ module.exports.updateRequest = function(req, res){
         sendJSONresponse(res, 404, err);
       } else {
         sendJSONresponse(res, 200, book);
-      } 
+      }
     })
   })
 }

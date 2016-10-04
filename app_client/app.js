@@ -1,5 +1,5 @@
 (function(){
-  
+
   angular.module('bookstoreApp', ['ngSanitize', 'ngRoute']);
 
   function config($routeProvider, $routeParams){
@@ -39,9 +39,12 @@
         controller: 'tradesCtrl',
         controllerAs: "vm"
       })
+      .when('/404', {
+        templateUrl: "/404/404.view.html"
+      })
       .otherwise({redirectTo: '/'});
   }
-  
+
   angular.module('bookstoreApp')
     .config(['$routeProvider', config])
 })();
