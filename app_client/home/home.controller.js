@@ -1,11 +1,16 @@
 (function(){
   angular.module('bookstoreApp')
   .controller('homeCtrl', homeCtrl);
-  
-  homeCtrl.$inject = ['$http', 'authentication', 'googleSearch','dbSearch'];
-  function homeCtrl($http, authentication, googleSearch, dbSearch){
+
+  homeCtrl.$inject = ['$http', 'authentication', 'googleSearch','dbSearch', 'Flash'];
+  function homeCtrl($http, authentication, googleSearch, dbSearch, Flash){
     var vm = this;
-    
+
+    if(Flash.hasAlert()) {
+      vm.error = Flash.getError();
+      Flash.reset();
+    }
+
     vm.genres = function(){
       dbSearch.forGenres()
         .success(function(data) {
@@ -16,16 +21,16 @@
         })
       return false;
     }
-    
+
     vm.currentUser = authentication.currentUser();
-    
+
     vm.genres();
-    
+
     vm.pageHeader = {
       title: 'Welcome Readers',
       strapline: 'Check out our user\'s collections'
     }
-    
+
     vm.emphasize = function(input){
       if(input === 'titleDiv'){
         vm.genreDivHide = true;
@@ -35,7 +40,7 @@
         vm.genreDivHide = false;
       }
     }
-    
+
     vm.searchBooks = function(title){
       vm.error = '';
       vm.userBooks = '';
@@ -51,7 +56,7 @@
         })
       return false;
     }
-    
+
     vm.addBook = function(info){
       vm.error = '';
       vm.userBooks = '';
@@ -66,18 +71,18 @@
         })
       return false;
     }
-    
+
     vm.getUserBooks = function(genre){
       vm.error = '';
       vm.userBooks = '';
       vm.googleBooks = '';
       vm.message = '';
-      
+
       if(!vm.currentUser){
         vm.error = 'Please log in'
         return false;
       }
-      
+
       genre = encodeURIComponent(genre);
       dbSearch.forBooks(genre)
         .success(function(data) {
