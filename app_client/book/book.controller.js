@@ -4,8 +4,8 @@
     .module('bookstoreApp')
     .controller('bookCtrl', bookCtrl);
   
-  bookCtrl.$inject = ['$anchorScroll', '$location', '$routeParams', 'authentication', 'dbSearch'];
-  function bookCtrl($anchorScroll, $location, $routeParams, authentication, dbSearch){
+  bookCtrl.$inject = ['$anchorScroll', '$location', '$routeParams', 'authentication', 'dbSearch', 'book'];
+  function bookCtrl($anchorScroll, $location, $routeParams, authentication, dbSearch, book){
     var vm = this;
     
     vm.bookId = $routeParams.bookid;
@@ -30,24 +30,18 @@
       $anchorScroll();
     }
     
-    dbSearch.findBookId(vm.bookId)
-      .success(function(data){
-        if(data.tradeRequests[0] === false){
-          vm.toggleButton('You have already requested this book', 'btn btn-danger');
-          vm.book = data;
-          return false;
-        } else if(data.owner.email === vm.currentUser.email){
-          vm.book = data;
-          vm.ownBook = true;
-          return false;
-        } else {
-          vm.toggleButton('Request trade!', 'btn btn-success');
-          vm.book = data;
-        }
-      })
-      .error(function(err){
-        vm.error = err;
-      })
+    if(book.data.tradeRequests[0] === false){
+      vm.toggleButton('You have already requested this book', 'btn btn-danger');
+      vm.book = book.data;
+      return false;
+    } else if(book.data.owner.email === vm.currentUser.email){
+      vm.book = book.data;
+      vm.ownBook = true;
+      return false;
+    } else {
+      vm.toggleButton('Request trade!', 'btn btn-success');
+      vm.book = book.data;
+    }
     
     vm.requestBook = function(bookid){
       vm.error = '';

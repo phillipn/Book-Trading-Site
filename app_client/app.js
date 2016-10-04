@@ -2,7 +2,7 @@
   
   angular.module('bookstoreApp', ['ngSanitize', 'ngRoute']);
 
-  function config($routeProvider){
+  function config($routeProvider, $routeParams){
     $routeProvider
       .when('/', {
         templateUrl: "/home/home.view.html",
@@ -12,7 +12,12 @@
       .when('/book/:bookid', {
         templateUrl: "/book/book.view.html",
         controller: 'bookCtrl',
-        controllerAs: "vm"
+        controllerAs: "vm",
+        resolve: {
+          book: function(dbSearch, $route){
+            return dbSearch.findBookId($route.current.params.bookid);
+          }
+        }
       })
       .when('/login', {
         templateUrl: "/auth/login/login.view.html",
