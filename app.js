@@ -34,7 +34,11 @@ app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
     res.status(401);
     res.json("Login please...");
-  } 
+  }
+})
+
+app.listen(8000, function() {
+    console.log('ready to go!');
 })
 
 module.exports = app;

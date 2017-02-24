@@ -77,7 +77,7 @@ module.exports.findBook = function(req, res){
 
       book.tradeRequests.some(function(request, i){
         if(request.email == req.payload.email){
-          // DIRTY DIRTY HACK - Preferably I would set a totally, separate virtual attribute to say "Hey, this user has already inquired about this book. I need to figure out how to do that."
+          // DIRTY DIRTY HACK - Preferably I would set a totally, separate virtual attribute to say "Hey, this user has already inquired about this book." I need to figure out how to do that.
           book.tradeRequests = false;
           return true;
         }

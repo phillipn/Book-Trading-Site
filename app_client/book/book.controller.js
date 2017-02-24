@@ -4,8 +4,8 @@
     .module('bookstoreApp')
     .controller('bookCtrl', bookCtrl);
 
-  bookCtrl.$inject = ['$anchorScroll', '$location', '$routeParams', 'authentication', 'dbSearch', 'Flash'];
-  function bookCtrl($anchorScroll, $location, $routeParams, authentication, dbSearch, Flash){
+  bookCtrl.$inject = ['$location', '$routeParams', 'authentication', 'dbSearch', 'Flash'];
+  function bookCtrl($location, $routeParams, authentication, dbSearch, Flash){
     var vm = this;
 
     vm.bookId = $routeParams.bookid;
@@ -44,11 +44,6 @@
     vm.toggleButton = function(text, buttonClass){
       vm.buttonText = text;
       vm.buttonClass = buttonClass;
-    }
-
-    vm.goToTop = function(){
-      $location.hash = 'alert1';
-      $anchorScroll();
     }
 
     vm.requestBook = function(bookid){
