@@ -39,7 +39,7 @@ userSchema.methods.generateJwt = function() {
     city: this.city,
     state: this.state,
     exp: parseInt(expiry.getTime() / 1000),
-  }, process.env.JWT_SECRET);
+  }, ENV['JWT_SECRET']);
 };
 
 mongoose.model('User', userSchema);
