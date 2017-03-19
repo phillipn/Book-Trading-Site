@@ -3,10 +3,10 @@ var router = express.Router();
 var ctrlGoogle = require('../controllers/google');
 var ctrlBooks = require('../controllers/books');
 var ctrlAuth = require('../controllers/authentication');
-var jwt = require('express-jwt'); 
+var jwt = require('express-jwt');
 
 var auth = jwt({
- secret: process.env.JWT_SECRET,
+ secret: ENV['JWT_SECRET'],
  userProperty: 'payload'
 });
 

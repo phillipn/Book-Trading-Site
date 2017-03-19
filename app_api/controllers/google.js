@@ -8,11 +8,11 @@ var sendJSONresponse = function(res, status, content) {
 };
 
 var options = {
-  key: process.env.API_KEY,
+  key: ENV['API_KEY'],
   limit: 12
 };
 
-module.exports.searchForBooks = function(req, res){  
+module.exports.searchForBooks = function(req, res){
   googleBooks.search(req.query.book, options, function(err, results, apiResponse) {
     if (err) {
       console.log('error');
