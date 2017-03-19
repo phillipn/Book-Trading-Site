@@ -2,14 +2,9 @@
   angular.module('bookstoreApp')
   .controller('homeCtrl', homeCtrl);
 
-  homeCtrl.$inject = ['$http', 'authentication', 'googleSearch','dbSearch', 'Flash'];
-  function homeCtrl($http, authentication, googleSearch, dbSearch, Flash){
+  homeCtrl.$inject = ['$http', 'authentication', 'googleSearch','dbSearch'];
+  function homeCtrl($http, authentication, googleSearch, dbSearch){
     var vm = this;
-
-    if(Flash.hasAlert()) {
-      vm.error = Flash.getError();
-      Flash.reset();
-    }
 
     vm.genres = function(){
       dbSearch.forGenres()
