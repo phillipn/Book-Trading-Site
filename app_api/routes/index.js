@@ -6,7 +6,7 @@ var ctrlAuth = require('../controllers/authentication');
 var jwt = require('express-jwt');
 
 var auth = jwt({
- secret: ENV['JWT_SECRET'],
+ secret: process.env.JWT_SECRET,
  userProperty: 'payload'
 });
 

@@ -8,7 +8,7 @@ var sendJSONresponse = function(res, status, content) {
 };
 
 var options = {
-  key: ENV['API_KEY'],
+  key: process.env.API_KEY,
   limit: 12
 };
 

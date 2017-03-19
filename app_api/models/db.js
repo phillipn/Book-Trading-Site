@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var gracefulShutdown;
-var MONGOLAB_URI = ENV['MONGOLAB_URI'];
+var MONGOLAB_URI = process.env.MONGOLAB_URI;
 
 mongoose.connect(MONGOLAB_URI);
 
